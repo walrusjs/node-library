@@ -1,0 +1,12 @@
+{
+  "name": "node-library",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:walrusjs/node-library.git",
+  "author": "wangxingkang <wang_xingkang@qq.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^3.22.1",
+    "typescript": "^4.1.5"
+  }
+}
