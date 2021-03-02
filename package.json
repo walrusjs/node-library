@@ -6,7 +6,7 @@
   "author": "wangxingkang <wang_xingkang@qq.com>",
   "license": "MIT",
   "scripts": {
-    "build": "pnpm run build --stream --filter @walrus/package-name",
+    "build": "pnpm run build --stream --filter @walrus/*",
     "release": "walrus release"
   },
   "devDependencies": {
