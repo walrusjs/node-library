@@ -1,6 +1,5 @@
 {
-  "name": "node-library",
-  "version": "1.0.0",
+  "name": "@walrus/workspace",
   "private": true,
   "repository": "git@github.com:walrusjs/node-library.git",
   "author": "wangxingkang <wang_xingkang@qq.com>",
@@ -11,14 +10,11 @@
   },
   "devDependencies": {
     "@walrus/cli": "^1.3.4",
-    "@walrus/plugin-release": "^1.12.1",
+    "@walrus/plugin-release": "^1.14.3",
     "@walrus/plugin-test": "^1.1.0",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.2.2"
+    "tsup": "^5.11.11",
+    "typescript": "^4.5.4"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "engines": {
     "node": ">=10.17.0"
   }
