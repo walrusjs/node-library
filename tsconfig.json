@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "strict": true,
     "target": "ES2018",
     "module": "CommonJS",
     "moduleResolution": "node",

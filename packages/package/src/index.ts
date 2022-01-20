@@ -2,8 +2,8 @@ import path from 'path';
 import npa from 'npm-package-arg';
 import { binSafeName, shallowCopy } from './utils';
 
-import type { PackageJson } from '@pansy/types';
-import type { RelativeResult } from './types';
+import type { PackageJson, $Keys } from '@pansy/types';
+import type { RelativeResult, PackageKeys } from './types';
 
 const PKG = Symbol('pkg');
 const _location = Symbol('location');
@@ -13,8 +13,9 @@ const _scripts = Symbol('scripts');
 const _contents = Symbol('contents');
 
 export class Package {
-  public name: string | undefined;
-  private [PKG]: any;
+  /** 包名称 */
+  public name: string;
+  private [PKG]: PackageJson;
   private [_location]: string;
   private [_rootPath]: string;
   private [_scripts]: PackageJson['scripts'];
@@ -28,16 +29,8 @@ export class Package {
    * @param location 包的目录地址
    * @param rootPath 项目跟路径
    */
-  constructor(
-    pkg: PackageJson,
-    location: string,
-    rootPath = location                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-  ) {
-    const resolved = npa.resolve(
-      pkg.name as string,
-      `file:${path.relative(rootPath, location)}`,
-      rootPath
-    );
+  constructor(pkg: PackageJson = {} as PackageJson, location: string, rootPath = location) {
+    const resolved = npa.resolve(pkg.name as string, `file:${path.relative(rootPath, location)}`, rootPath);
 
     this.name = pkg.name;
     this[PKG] = pkg;
@@ -45,7 +38,7 @@ export class Package {
     this[_location] = location;
     this[_resolved] = resolved;
     this[_scripts] = {
-      ...pkg.scripts
+      ...pkg.scripts,
     };
 
     this[_resolved] = resolved;
@@ -73,7 +66,7 @@ export class Package {
 
   get bin() {
     const pkg = this[PKG];
-    return typeof pkg.bin === "string"
+    return typeof pkg.bin === 'string'
       ? {
           [binSafeName(this.resolved) as string]: pkg.bin,
         }
@@ -133,8 +126,9 @@ export class Package {
     return this[PKG].peerDependencies;
   }
 
+  // @ts-ignores
   get(key: string) {
-    return this[PKG][key];
+    return this[PKG][key as PackageKeys];
   }
 
   set(key: string, val: any) {
