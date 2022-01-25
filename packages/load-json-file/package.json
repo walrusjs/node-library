@@ -1,0 +1,21 @@
+{
+  "name": "@walrus/load-json-file",
+  "version": "1.0.0",
+  "description": "cross platform console clear",
+  "main": "./dist/index.js",
+  "module": "dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": "git@github.com:walrusjs/node-library.git",
+  "author": "wangxingkang <wang_xingkang@qq.com>",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  }
+}
