@@ -1,0 +1,27 @@
+{
+  "name": "@walrus/write-json-file",
+  "version": "1.0.0",
+  "description": "写入Json文件",
+  "main": "./dist/index.js",
+  "module": "dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": "git@github.com:walrusjs/node-library.git",
+  "author": "wangxingkang <wang_xingkang@qq.com>",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "detect-indent": "^7.0.0",
+    "is-plain-obj": "^4.0.0",
+    "sort-keys": "^5.0.0",
+    "write-file-atomic": "^4.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  }
+}
