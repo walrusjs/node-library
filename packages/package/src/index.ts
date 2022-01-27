@@ -1,9 +1,11 @@
 import path from 'path';
 import npa from 'npm-package-arg';
+import { writePackage } from '@walrus/write-pkg';
+import { loadJsonFile } from '@walrus/load-json-file';
 import { binSafeName, shallowCopy } from './utils';
 
-import type { PackageJson, $Keys } from '@pansy/types';
-import type { RelativeResult, PackageKeys } from './types';
+import type { PackageJson } from '@pansy/types';
+import type { RelativeResult } from './types';
 
 const PKG = Symbol('pkg');
 const _location = Symbol('location');
@@ -15,13 +17,17 @@ const _contents = Symbol('contents');
 export class Package {
   /** 包名称 */
   public name: string;
+  /** 包信息 */
   private [PKG]: PackageJson;
+  /** 包路径 */
   private [_location]: string;
+  /** 项目根路径 */
   private [_rootPath]: string;
+  /** 包命令集合 */
   private [_scripts]: PackageJson['scripts'];
   private [_resolved]: RelativeResult;
 
-  private [_contents]: any;
+  private [_contents]: string;
 
   /**
    * 解析包并提供便捷的操作方法
@@ -37,6 +43,7 @@ export class Package {
 
     this[_location] = location;
     this[_resolved] = resolved;
+    this[_rootPath] = rootPath;
     this[_scripts] = {
       ...pkg.scripts,
     };
@@ -126,9 +133,8 @@ export class Package {
     return this[PKG].peerDependencies;
   }
 
-  // @ts-ignores
   get(key: string) {
-    return this[PKG][key as PackageKeys];
+    return this[PKG][key];
   }
 
   set(key: string, val: any) {
@@ -139,5 +145,57 @@ export class Package {
 
   toJSON() {
     return shallowCopy(this[PKG]);
+  }
+
+  /**
+   * 刷新Pkg数据
+   * @returns
+   */
+  refresh() {
+    return loadJsonFile(this.manifestLocation).then((pkg) => {
+      this[PKG] = pkg as unknown as PackageJson;
+
+      return this;
+    });
+  }
+
+  serialize() {
+    return writePackage(this.manifestLocation, this[PKG]).then(() => this);
+  }
+
+  /**
+   *
+   * @param resolved 更新本地依赖
+   * @param depVersion
+   * @param savePrefix
+   */
+  updateLocalDependency(resolved: any, depVersion: string, savePrefix: string) {
+    const depName = resolved.name;
+
+    let depCollection = this.dependencies;
+
+    if (!depCollection || !depCollection[depName]) {
+      depCollection = this.optionalDependencies;
+    }
+
+    if (!depCollection || !depCollection[depName]) {
+      depCollection = this.devDependencies;
+    }
+
+    if (resolved.registry || resolved.type === 'directory') {
+      depCollection[depName] = `${savePrefix}${depVersion}`;
+    } else if (resolved.gitCommittish) {
+      const [tagPrefix] = /^\D*/.exec(resolved.gitCommittish);
+
+      const { hosted } = resolved;
+      hosted.committish = `${tagPrefix}${depVersion}`;
+
+      depCollection[depName] = hosted.toString({ noGitPlus: false, noCommittish: false });
+    } else if (resolved.gitRange) {
+      const { hosted } = resolved;
+      hosted.committish = `semver:${savePrefix}${depVersion}`;
+
+      depCollection[depName] = hosted.toString({ noGitPlus: false, noCommittish: false });
+    }
   }
 }
