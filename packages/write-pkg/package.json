@@ -1,6 +1,6 @@
 {
   "name": "@walrus/write-pkg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Write a package.json file",
   "main": "./dist/index.js",
   "module": "dist/esm/index.js",
@@ -15,7 +15,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@walrus/write-json-file": "^1.0.0",
+    "@walrus/write-json-file": "1.0.1",
     "sort-keys": "^5.0.0"
   },
   "publishConfig": {

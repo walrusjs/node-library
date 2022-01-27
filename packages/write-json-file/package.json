@@ -1,6 +1,6 @@
 {
   "name": "@walrus/write-json-file",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Stringify and write JSON to a file atomically",
   "main": "./dist/index.js",
   "module": "dist/esm/index.js",
