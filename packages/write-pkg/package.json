@@ -1,7 +1,7 @@
 {
-  "name": "@walrus/write-json-file",
+  "name": "@walrus/write-pkg",
   "version": "1.0.0",
-  "description": "Stringify and write JSON to a file atomically",
+  "description": "Write a package.json file",
   "main": "./dist/index.js",
   "module": "dist/esm/index.js",
   "types": "./dist/index.d.ts",
@@ -15,10 +15,8 @@
     "build": "tsup"
   },
   "dependencies": {
-    "detect-indent": "^7.0.0",
-    "is-plain-obj": "^4.0.0",
-    "sort-keys": "^5.0.0",
-    "write-file-atomic": "^4.0.0"
+    "@walrus/write-json-file": "^1.0.0",
+    "sort-keys": "^5.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",

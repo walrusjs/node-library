@@ -7,6 +7,14 @@ import isPlainObj from 'is-plain-obj';
 
 import type { Options } from './types';
 
+/**
+ * 执行参数检查和参数默认值处理
+ * @param function_
+ * @param filePath
+ * @param data
+ * @param options
+ * @returns
+ */
 const init = (function_, filePath: string, data: unknown, options: Options) => {
   if (!filePath) {
     throw new TypeError('Expected a filepath');
@@ -50,7 +58,7 @@ const main = async (filePath: string, data: unknown, options: Options) => {
     }
   }
 
-  const json = JSON.stringify(data, options.replacer as any, indent);
+  const json = JSON.stringify(data, options.replacer, indent);
 
   return writeFileAtomic(filePath, `${json}${trailingNewline}`, { mode: options.mode, chown: false });
 };
@@ -81,6 +89,12 @@ const mainSync = (filePath, data, options) => {
   });
 };
 
+/**
+ * 写入JSON文件
+ * @param filePath 文件路径
+ * @param data 写入的内容
+ * @param options 写入的配置
+ */
 export async function writeJsonFile(filePath: string, data: unknown, options?: Options) {
   await fsPromises.mkdir(path.dirname(filePath), {
     recursive: true,
@@ -92,3 +106,5 @@ export function writeJsonFileSync(filePath: string, data: unknown, options?: Opt
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   init(mainSync, filePath, data, options);
 }
+
+export type { Options } from './types';
