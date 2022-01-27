@@ -21,5 +21,9 @@
   },
   "devDependencies": {
     "@types/npm-package-arg": "^6.1.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   }
 }
