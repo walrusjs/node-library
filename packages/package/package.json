@@ -1,13 +1,18 @@
 {
   "name": "@walrus/package",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": "git@github.com:walrusjs/node-library.git",
+  "author": "wangxingkang <wang_xingkang@qq.com>",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@walrus/load-json-file": "^1.0.0",
     "@walrus/write-pkg": "^1.0.0",
