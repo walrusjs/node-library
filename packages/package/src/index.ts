@@ -164,8 +164,8 @@ export class Package {
   }
 
   /**
-   *
-   * @param resolved 更新本地依赖
+   * 更新本地依赖
+   * @param resolved
    * @param depVersion
    * @param savePrefix
    */
